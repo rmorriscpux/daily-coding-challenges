@@ -23,6 +23,8 @@ def sum_to_k(num_list, k):
     # No sum found in list. Return here.
     return False
 
+# Solution has complexity of O(n^2/2).
+
 print(sum_to_k([10, 15, 3, 7], 17)) #True
 print(sum_to_k([10, 15, 3, 7], 18)) #True
 print(sum_to_k([10, 15, 3, 7], 19)) #False
