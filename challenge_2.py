@@ -4,6 +4,7 @@ Given an array of integers, return a new array such that each element at index i
 For example, if our input was [1, 2, 3, 4, 5], the expected output would be [120, 60, 40, 30, 24]. If our input was [3, 2, 1], the expected output would be [2, 3, 6]
 '''
 
+# With this method, order is O(n^2)
 def mult_array_around_i(int_arr): # Note: Input cleanse omitted for brevity.
     # Initialize output array.
     mult_arr = []
@@ -19,6 +20,21 @@ def mult_array_around_i(int_arr): # Note: Input cleanse omitted for brevity.
     
     return mult_arr
 
+# Using division, order is O(2n)
+def mult_array_around_i_2(int_arr):
+    total_mult = 1
+    for num in int_arr:
+        total_mult *= num
+    mult_arr = []
+    for num in int_arr:
+        mult_arr.append(int(total_mult / num))
+
+    return mult_arr
+
 print(mult_array_around_i([1, 2, 3, 4, 5]))
 print(mult_array_around_i([3, 2, 1]))
 print(mult_array_around_i([3, 2, -1]))
+
+print(mult_array_around_i_2([1, 2, 3, 4, 5]))
+print(mult_array_around_i_2([3, 2, 1]))
+print(mult_array_around_i_2([3, 2, -1]))
