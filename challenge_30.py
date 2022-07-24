@@ -43,4 +43,4 @@ def waterFilled(height_array):
 
     return fill_amount
 
-print(waterFilled([3, 0, 1, 3, 0, 5]))
+print(waterFilled([3, 0, 1, 4, 0, 5, 0, 2]))
