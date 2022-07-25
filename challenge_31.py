@@ -9,7 +9,7 @@ Given two strings, compute the edit distance between them.
 def editDistance(str1, str2):
     # Make a 2D list with the dimensions being the length of the strings + 1. Populate with 0
     distance_matrix = [[0 for j in range(0, len(str2)+1)] for i in range(0, len(str1)+1)]
-    # Calculate distances 
+    # Set base distances for cases where one string is blank.
     for i in range(0, len(str1)+1):
         distance_matrix[i][0] = i
     for j in range(0, len(str2)+1):
