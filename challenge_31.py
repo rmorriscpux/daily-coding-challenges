@@ -21,8 +21,8 @@ def editDistance(str1, str2):
             diff_substr = 1 if str1[i-1] != str2[j-1] else 0
             distance_matrix[i][j] = min(distance_matrix[i-1][j-1] + diff_substr, distance_matrix[i][j-1] + 1, distance_matrix[i-1][j] + 1)
 
-    for row in distance_matrix:
-        print(row)
+    # for row in distance_matrix:
+    #     print(row)
 
     return distance_matrix[len(str1)][len(str2)]
 
