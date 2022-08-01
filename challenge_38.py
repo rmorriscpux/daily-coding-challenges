@@ -5,7 +5,8 @@ where N queens can be placed on the board without threatening each other, i.e. n
 
 # In chess, queens can move any number of spaces on the board in any cardinal or diagonal direction.
 
-# Board is represented as a list built up to a length of N. Each index represents a row, and the number represents the column where a queen is placed.
+# Board is represented as a list built up to a length of N.
+# Each index represents a row, and the number in each index represents the column where a queen is placed in that row.
 # As the board list builds up, checks are made to ensure that each next queen placed does not threaten any other queens previously placed.
 def arrangeQueens(N : int, board : list=[]):
     # Subroutine to check if a sub-board as laid out is valid.
