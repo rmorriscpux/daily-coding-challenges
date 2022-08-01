@@ -5,8 +5,9 @@ where N queens can be placed on the board without threatening each other, i.e. n
 
 # In chess, queens can move any number of spaces on the board in any cardinal or diagonal direction.
 
-# Board is represented
-def arrangeQueens(N : int, board=[]):
+# Board is represented as a list built up to a length of N. Each index represents a row, and the number represents the column where a queen is placed.
+# As the board list builds up, checks are made to ensure that each next queen placed does not threaten any other queens previously placed.
+def arrangeQueens(N : int, board : list=[]):
     # Subroutine to check if a sub-board as laid out is valid.
     def isValid(sub_board):
         new_queen_row = len(sub_board) - 1
@@ -18,6 +19,10 @@ def arrangeQueens(N : int, board=[]):
                 return False
         # Loop complete, sub-board is valid.
         return True
+
+    # Sanity check on N
+    if N < 0:
+        return 0
     
     # Check if we have a complete board. At this point, we can add to the total arrangement count below.
     if N == len(board):
