@@ -139,7 +139,15 @@ def gameOfLife(coords : List[Tuple[int, int]], steps : int):
                         new_board[i].append('.')
                 new_board[y][len(board[0])] = '*'
 
-        # Left Edge - To Do Later
+        # Left Edge
+        left_edge_shifted = False
+        for y in range(1, len(board)-1):
+            if board[y-1][0] == '*' and board[y][0] == '*' and board[y+1][0] == '*':
+                if not left_edge_shifted:
+                    for i in range(0, len(new_board)):
+                        new_board[i].insert(0, '.')
+                    left_edge_shifted = True
+                new_board[y][0] = '*'
 
         # Bottom Edge
         bottom_edge = len(board)-1
@@ -150,7 +158,14 @@ def gameOfLife(coords : List[Tuple[int, int]], steps : int):
                     new_board.append(['.' for i in range(0, len(new_board[0]))])
                 new_board[len(board)][x] = '*'
 
-        # Top Edge - To Do Later
+        # Top Edge
+        top_edge_shifted = False
+        for x in range(1, len(board[0])-1):
+            if board[0][x-1] == '*' and board[0][x] == '*' and board[0][x+1] == '*':
+                if not top_edge_shifted:
+                    new_board.insert(0, ['.' for i in range(0, len(new_board[0]))])
+                    top_edge_shifted = True
+                new_board[0][x] = '*'
 
         board = new_board
         grid = calculateGrid(board)
@@ -159,4 +174,4 @@ def gameOfLife(coords : List[Tuple[int, int]], steps : int):
         
     return
 
-gameOfLife([(3, 3), (3, 4), (4, 3), (5, 6), (4, 4)], 5)
+gameOfLife([(3, 3), (3, 4), (4, 3), (4, 5), (4, 4)], 5)
