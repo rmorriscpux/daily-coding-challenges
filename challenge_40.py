@@ -18,7 +18,9 @@ def nonDuplicateInteger(array : List[int]):
         set_length = len(unique_integers)
         arr_sum += integer
         unique_integers.add(integer)
-        if len(unique_integers) > set_length: # The integer was not previously in the unique_integers set.
+        # Add the integer times 3 if the integer was not previously in the unique_integers set.
+        # Doing this within the loop instead of having a new loop keeps O(N) time complexity.
+        if len(unique_integers) > set_length: 
             triple_sum += integer * 3
     
     return (triple_sum - arr_sum) // 2
