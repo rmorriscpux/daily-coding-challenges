@@ -44,7 +44,8 @@ def buildItinerary(flights : List[Tuple[str, str]], start : str):
     for i, (takeoff, landing) in enumerate(sorted_flights):
         if takeoff == start:
             final_itinerary = rBuildItinerary(sorted_flights[:i] + sorted_flights[i+1:], [takeoff, landing])
-            break
+            if final_itinerary:
+                break
     return final_itinerary
 
 print(buildItinerary([('SFO', 'HKO'), ('YYZ', 'SFO'), ('YUL', 'YYZ'), ('HKO', 'ORD')], 'YUL'))
