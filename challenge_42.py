@@ -10,11 +10,15 @@ from typing import List
 import copy
 
 def sumSet(S : List[int], k : int):
+    # Recursive subroutine that incorporates backtracking.
     def rSubSet(current_sum, sub_list, rem_list, k):
+        # Terminator Condition 1: current_sum equals k, so the sub_list is a valid subset.
         if current_sum == k:
             return sub_list
+        # Terminator Condition 2: current_sum is greater than k, or there are no more integers in the list to sum. Invalid so return None.
         elif current_sum > k or not rem_list:
             return None
+        # Add to the sub_list and go through the remaining. Backtrack if necessary.
         else:
             for i, num in enumerate(rem_list):
                 sub_list.append(num)
