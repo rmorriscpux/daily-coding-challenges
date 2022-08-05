@@ -11,7 +11,7 @@ import copy
 
 def sumSet(S : List[int], k : int):
     # Recursive subroutine that incorporates backtracking.
-    def rSubSet(current_sum, sub_list, rem_list, k):
+    def rSumSet(current_sum, sub_list, rem_list, k):
         # Terminator Condition 1: current_sum equals k, so the sub_list is a valid subset.
         if current_sum == k:
             return sub_list
@@ -22,7 +22,7 @@ def sumSet(S : List[int], k : int):
         else:
             for i, num in enumerate(rem_list):
                 sub_list.append(num)
-                result = rSubSet(current_sum + num, sub_list, rem_list[i+1:], k)
+                result = rSumSet(current_sum + num, sub_list, rem_list[i+1:], k)
                 if result:
                     return result
                 sub_list.pop()
@@ -32,16 +32,14 @@ def sumSet(S : List[int], k : int):
     sort_S = copy.deepcopy(S)
     sort_S.sort(reverse=True)
 
-    # Remove any integers greater than k.
+    # Pass over integers greater than k.
     for i, num in enumerate(sort_S):
         if num <= k:
-            sort_S = sort_S[i:]
-            break
+            # Go to recursive function with list of numbers not greater than k.
+            return rSumSet(0, [], sort_S[i:], k)
     else:
         # All numbers in the list are greater than k, therefore no subset that sums to k exists.
         return None
-
-    return rSubSet(0, [], sort_S, k)
 
 print(sumSet([12, 1, 61, 5, 9, 2], 24))
 print(sumSet([12, 1, 61, 5, 9, 2], 25))
