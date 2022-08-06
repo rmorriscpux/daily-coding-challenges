@@ -27,8 +27,13 @@ class Stack:
         return self
 
     def pop(self):
+        # Return None if stack is empty.
+        if not self.top:
+            return None
+
         pop_data = self.top.data
         self.top = self.top.next
+        # Recalculate self._max if the max value was popped.
         if pop_data == self._max:
             if self.top == None:
                 self._max = None
