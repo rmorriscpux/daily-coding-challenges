@@ -7,7 +7,7 @@ For example, the longest palindromic substring of "aabcdcb" is "bcdcb". The long
 def longestPalindrome(s: str):
     # Terminator
     if len(s) <= 1:
-        return None
+        return ""
 
     # This will work regardless of whether len(s) is odd or even.
     l_ptr = len(s) // 2 - 1
