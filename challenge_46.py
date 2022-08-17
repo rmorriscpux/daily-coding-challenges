@@ -41,3 +41,25 @@ def longestPalindrome(s: str):
 print(longestPalindrome("aabcdcb"))
 print(longestPalindrome("bananas"))
 print(longestPalindrome('abcdefg'))
+
+# More elegant solution.
+def longestPalindrome2(s: str):
+    # Terminator
+    if len(s) <= 1:
+        return ""
+
+    # For a string s in Python, s[::-1] returns the s in reverse. This way we can easily check if it's a palindrome, since palindromes are the same when reversed.
+    if s == s[::-1]:
+        return s
+
+    # Recur without last character.
+    left_sub_s = longestPalindrome(s[:len(s)-1])
+    right_sub_s = longestPalindrome(s[1:])
+
+    # Regarding the above, we don't need the extra step to check falsiness of the two recurred functions. Just check length.
+    return left_sub_s if len(left_sub_s) >= len(right_sub_s) else right_sub_s
+
+print("==========")
+print(longestPalindrome2("aabcdcb"))
+print(longestPalindrome2("bananas"))
+print(longestPalindrome2('abcdefg'))
