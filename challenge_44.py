@@ -13,8 +13,10 @@ The array [5, 4, 3, 2, 1] has ten inversions: every distinct pair forms an inver
 
 from typing import List, Tuple
 
-def countInversions(arr: List) -> Tuple[List, int]:
-    def mergeSortInv(arr1_info, arr2_info):
+# Merge sort operation that returns inversions has O(N*log(N)) time complexity.
+
+def mergeSortInv(arr: List) -> Tuple[List, int]:
+    def mergeLists(arr1_info, arr2_info):
         arr1 = arr1_info[0]
         arr2 = arr2_info[0]
         inversions = arr1_info[1] + arr2_info[1]
@@ -45,8 +47,10 @@ def countInversions(arr: List) -> Tuple[List, int]:
 
     middle = len(arr) // 2
 
-    return mergeSortInv(countInversions(arr[:middle]), countInversions(arr[middle:]))
+    return mergeLists(mergeSortInv(arr[:middle]), mergeSortInv(arr[middle:]))
 
+def countInversions(arr: List) -> int:
+    return mergeSortInv(arr)[1]
 
-print(countInversions([2, 4, 1, 3, 5])[1])
-print(countInversions([5, 4, 3, 2, 1])[1])
+print(countInversions([2, 4, 1, 3, 5]))
+print(countInversions([5, 4, 3, 2, 1]))
