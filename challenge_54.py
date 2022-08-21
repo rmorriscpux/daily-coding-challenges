@@ -16,7 +16,7 @@ def sudokuSolver(board: List[List[int]]):
         box_col = y - (y % 3)
         return "{}-{}".format(box_row, box_col)
 
-    # Backtracking recursive subroutine.
+    # Backtracking recursive subroutine. As we go through, we want to keep track of which numbers are in each row, column, and box.
     def rSudokuSolver(board, row_fills, col_fills, box_fills):
         for i in range(0, 9):
             for j in range(0, 9):
