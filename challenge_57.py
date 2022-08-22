@@ -11,25 +11,19 @@ For example, given the string "the quick brown fox jumps over the lazy dog" and 
 
 # Done With Splitting.
 def stringIntoLines1(s: str, k: int):
-    def buildLines(s_list, k, lines):
-        new_line = s_list[0]
-        for i in range(1, len(s_list)):
-            if len(new_line) + 1 + len(s_list[i]) > k:
-                new_start = i
-                break
-            new_line += " " + s_list[i]
-        else:
-            lines.append(new_line)
-            return
-        
-        lines.append(new_line)
-        buildLines(s_list[new_start:], k, lines)
-    
+    s_list = s.split()
     lines = []
-    buildLines(s.split(), k, lines)
+    new_line = s_list[0]
+    for word in s_list[1:]:
+        if len(new_line) + 1 + len(word) > k:
+            lines.append(new_line)
+            new_line = word
+        else:
+            new_line += " " + word
+    lines.append(new_line)
     return lines
 
-# Done Without Splitting. I like this better, but I have a feeling it's faster with the split.
+# Done Without Splitting. I have a feeling it's faster with the split.
 def stringIntoLines2(s: str, k: int):
     def buildLines(s, k, lines):
         # Return if empty.
