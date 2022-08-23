@@ -13,6 +13,11 @@ class Node(ABC):
         self.parent = None
         self.digest = None
 
+    def __eq__(self, other_node):
+        if type(other_node) != Node:
+            return False
+        return self.digest == other_node.digest
+
     def addToDirectory(self, directory):
         self.parent = directory
         directory.addChild(self)
@@ -24,6 +29,7 @@ class Node(ABC):
 class Directory(Node):
     def __init__(self):
         Node.__init__(self)
+        self._is_directory = True
         self.children = set()
         self.calculateDigest()
 
@@ -53,6 +59,7 @@ class Directory(Node):
 class File(Node):
     def __init__(self, data):
         Node.__init__(self)
+        self._is_directory = False
         self._data = data
         self.calculateDigest()
 
