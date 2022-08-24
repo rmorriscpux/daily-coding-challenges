@@ -16,17 +16,29 @@ def pow(x: int, y: int):
     power = 1
     result = x
 
-    # x^y = x^a * x^(y-2^a)
+    # Exponentially increase the result until we reach a point where doubling the exponent exceeds y.
     while power * 2 <= abs(y):
         result *= result
         power *= 2
 
+    # Multiply in the remaining exponent via recursive call.
     result *= pow(x, abs(y)-power)
 
     # Negative power means inverse result.
     return 1/result if y < 0 else result
 
-print(pow(2, 10))
-print(pow(10, 3))
-print(pow(3, 5))
-print(pow(2, -3))
+print(pow(2, 10)) # 1024
+print(pow(10, 3)) # 1000
+print(pow(3, 5))  # 243
+print(pow(2, -3)) # 0.125
+
+'''
+Note: Naive solution would look like this:
+
+result = 1
+for i in range(0, abs(y)):
+    result *= x
+
+This solution works in O(N) time.
+The doubling solution works in O(log N) time.
+'''
