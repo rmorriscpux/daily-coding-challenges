@@ -14,6 +14,7 @@ class Position:
             return False
         return self.x == other.x and self.y == other.y
 
+    # Hash necessary to include in sets.
     def __hash__(self):
         return hash((self.x, self.y))
 
