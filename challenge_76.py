@@ -44,6 +44,17 @@ def numColumnsToRemove(char_matrix: List[List[str]]):
                 break
     return count
 
+# List of strings version.
+# Assume all strings are of equal length.
+def numLettersToRemove(str_list: List[str]):
+    count = 0
+    for letter in range(0, len(str_list[0])):
+        for word in range(1, len(str_list)):
+            if str_list[word-1][letter] > str_list[word][letter]:
+                count += 1
+                break
+    return count
+
 print(numColumnsToRemove([
     ['c', 'b', 'a'],
     ['d', 'a', 'f'],
