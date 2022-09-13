@@ -64,6 +64,7 @@ def mergeSortedLists(*linked_lists: SLL):
     while True:
         cur_min_index = None
         for i, cur_list in enumerate(linked_lists):
+            # Ignore empty linked lists.
             if len(cur_list) == 0:
                 continue
 
@@ -72,9 +73,11 @@ def mergeSortedLists(*linked_lists: SLL):
             elif cur_list.head.value < linked_lists[cur_min_index].head.value:
                 cur_min_index = i
 
+        # Exhausted all input linked lists when cur_min_index == None at the end of the for loop.
         if cur_min_index == None:
             break
 
+        # Remove the minimum value among all input linked lists and add it to the back of the merged list.
         pop_node = linked_lists[cur_min_index].remove()
         merged_list.addBack(pop_node.value)
 
