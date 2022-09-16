@@ -16,47 +16,47 @@ from typing import List, Tuple
 def countIslands(matrix: List[List[int]]):
     # Recursive function to build out an island. Will mark an entire island as traversed and return 1 at the top level.
     def rCountIslands(matrix: List[List[int]], coords: Tuple[int, int], traversed: List[List[bool]]):
-        x, y = coords
+        y, x = coords
 
         traversed[y][x] = True
 
         # West
         if x > 0 and matrix[y][x-1] == 1 and not traversed[y][x-1]:
-            rCountIslands(matrix, (x-1, y), traversed)
+            rCountIslands(matrix, (y, x-1), traversed)
         # Southwest
         if x > 0 and y < len(matrix)-1 and matrix[y+1][x-1] == 1 and not traversed[y+1][x-1]:
-            rCountIslands(matrix, (x-1, y+1), traversed)
+            rCountIslands(matrix, (y+1, x-1), traversed)
         # South
         if y < len(matrix)-1 and matrix[y+1][x] == 1 and not traversed[y+1][x]:
-            rCountIslands(matrix, (x, y+1), traversed)
+            rCountIslands(matrix, (y+1, x), traversed)
         # Southeast
         if x < len(matrix[0])-1 and y < len(matrix)-1 and matrix[y+1][x+1] == 1 and not traversed[y+1][x+1]:
-            rCountIslands(matrix, (x+1, y+1), traversed)
+            rCountIslands(matrix, (y+1, x+1), traversed)
         # East
         if x < len(matrix[0])-1 and matrix[y][x+1] == 1 and not traversed[y][x+1]:
-            rCountIslands(matrix, (x+1, y), traversed)
+            rCountIslands(matrix, (y, x+1), traversed)
         # Northeast
         if x < len(matrix[0])-1 and y > 0 and matrix[y-1][x+1] == 1 and not traversed[y-1][x+1]:
-            rCountIslands(matrix, (x+1, y-1), traversed)
+            rCountIslands(matrix, (y-1, x+1), traversed)
         # North
         if y > 0 and matrix[y-1][x] == 1 and not traversed[y-1][x]:
-            rCountIslands(matrix, (x, y-1), traversed)
+            rCountIslands(matrix, (y-1, x), traversed)
         # Northwest
         if x > 0 and y > 0 and matrix[y-1][x-1] == 1 and not traversed[y-1][x-1]:
-            rCountIslands(matrix, (x-1, y-1), traversed)
+            rCountIslands(matrix, (y-1, x-1), traversed)
 
         return 1
 
     # Setup all False traversed matrix and a count of 0.
-    traversed = [[False for j in range(0, len(matrix[0]))] for i in range(0, len(matrix))]
+    traversed = [[False for x in range(0, len(matrix[0]))] for y in range(0, len(matrix))]
     count = 0
     # Traverse through the matrix.
-    for i in range(0, len(matrix)):
-        for j in range(0, len(matrix[0])):
-            if not traversed[i][j]:
-                if matrix[i][j] == 1:
-                    count += rCountIslands(matrix, (j, i), traversed)
-                traversed[i][j] = True
+    for y in range(0, len(matrix)):
+        for x in range(0, len(matrix[0])):
+            if not traversed[y][x]:
+                if matrix[y][x] == 1:
+                    count += rCountIslands(matrix, (y, x), traversed)
+                traversed[y][x] = True
 
     return count
 
