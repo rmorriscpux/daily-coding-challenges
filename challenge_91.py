@@ -16,7 +16,7 @@ What does the below code snippet print out? How can we fix the anonymous functio
 functions = []
 for i in range(10):
     functions.append(lambda x=i : x) 
-    # This sets an input 'x' for each function to the value of 'i' as a default at the time of declaration.
+    # This sets an input 'x' for each function to the value of 'i' at the time of declaration as a default.
     # Therefore it returns that 'x' value when called with no parameters, as in the second loop.
 
 for f in functions:
