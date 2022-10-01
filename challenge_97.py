@@ -82,10 +82,11 @@ class TimeMap:
         if time < node_ptr.timestamp:
             return None
 
-        while node_ptr:
-            if time >= node_ptr.timestamp:
+        while node_ptr.next:
+            if time < node_ptr.next.timestamp:
                 return node_ptr.value
             node_ptr = node_ptr.next
+        return node_ptr.value
 
 d = TimeMap()
 d.set(1, 1, 0) # set key 1 to value 1 at time 0
