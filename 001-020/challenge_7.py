@@ -6,10 +6,6 @@ For example, the message '111' would give 3, since it could be decoded as 'aaa',
 You can assume that the messages are decodable. For example, '001' is not allowed.
 '''
 
-# This is a more novel solution using an RNG to decide if a letter will be represented as 1 or 1x, and 2 or 2x.
-# It takes more time and loses reliability with more digits in the message.
-# Might revisit this with a purely logical solution one day.
-
 import random
 
 # Note: In practice, should have a separate .py file for this and import.
@@ -42,7 +38,35 @@ CODE_MAP = {
     '26' : 'z'
 }
 
-def ways_to_decode(message):
+def waysToDecode(message):
+    def rWaysToDecode(remaining_message, decode_words, current_word):
+        # End case - remaining_message depleted.
+        if not remaining_message:
+            decode_words.append(current_word)
+            return
+
+        index = remaining_message[0]
+
+        # index is 0 = Invalid case.
+        if index == 0:
+            return
+
+        # Recursion part.
+        rWaysToDecode(remaining_message[1:], decode_words, current_word + CODE_MAP[index])
+
+        if len(remaining_message) >= 2:
+            if index == '1' or (index == '2' and int(remaining_message[1]) <= 6):
+                index += remaining_message[1]
+                rWaysToDecode(remaining_message[2:], decode_words, current_word + CODE_MAP[index])
+
+        return decode_words
+
+    all_words = rWaysToDecode(str(message), [], "")
+    return len(all_words)
+
+# Original implementation I had, not using recursion, based on a Monte Carlo method.
+# It takes more time and loses reliability with more digits in the message.
+def waysToDecodeRandom(message):
     message = str(message)
     decodes_found = set(())
 
@@ -78,7 +102,7 @@ def ways_to_decode(message):
 
     return len(decodes_found)
 
-print(ways_to_decode(1111))
-print(ways_to_decode(1126))
-print(ways_to_decode(2127))
-print(ways_to_decode(16541324))
+print(waysToDecode(1111))
+print(waysToDecode(1126))
+print(waysToDecode(2127))
+print(waysToDecode(16541324))
