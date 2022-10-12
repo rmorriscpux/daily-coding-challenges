@@ -19,10 +19,12 @@ class TreeNode:
 
     def printLevelWise(self):
         def rPrint(node_ptr, depth, priority_queue):
+            # Build a list of lists as we go. At the end we'll have lists ordered by level.
             if len(priority_queue) <= depth:
                 priority_queue.append([])
-            
+            # Append the value to the current index's list.
             priority_queue[depth].append(node_ptr.value)
+            # Recur into the node's children if they exist.
             if node_ptr.left:
                 rPrint(node_ptr.left, depth+1, priority_queue)
             if node_ptr.right:
@@ -32,6 +34,7 @@ class TreeNode:
 
         priority_queue = rPrint(self, 0, [])
 
+        # Concatenate the priority queue and print in order.
         out_list = []
         for depth_list in priority_queue:
             out_list.extend(depth_list)
