@@ -1,8 +1,8 @@
 '''
 Given a string and a set of delimiters, reverse the words in the string while maintaining the relative order of the delimiters.
-For example, given “hello/world:here”, return “here/world:hello”
+For example, given "hello/world:here", return "here/world:hello"
 
-Follow-up: Does your solution work for the following cases: “hello/world:here/”, “hello//world:here”
+Follow-up: Does your solution work for the following cases: "hello/world:here/", "hello//world:here"
 '''
 
 from typing import Set
@@ -36,6 +36,7 @@ def reverseStringWithDelimiters(word_string: str, delimiters: Set[str]):
     out_str = ""
     on_word = word_string[0] not in delimiters
     for i in range(0, len(words) + len(spaces)):
+        # Using integer division to get each index.
         if on_word:
             out_str += words[i//2]
         else:
