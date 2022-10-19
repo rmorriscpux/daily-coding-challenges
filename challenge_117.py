@@ -37,3 +37,20 @@ def minSumLevel(root: TreeNode):
 
     lowest_sum, lowest_level = rMinSumLevel(0, [root])
     return lowest_level
+
+root = TreeNode(4)
+root.left = TreeNode(2)
+root.right = TreeNode(1)
+root.left.left = TreeNode(3)
+root.left.right = TreeNode(7)
+root.right.left = TreeNode(3)
+root.right.right = TreeNode(4)
+root.left.right.left = TreeNode(5)
+root.right.left.right = TreeNode(6)
+root.right.right.left = TreeNode(2)
+
+print(minSumLevel(root))
+root.right.left.right.value = -10
+print(minSumLevel(root))
+root.value = -20
+print(minSumLevel(root))
