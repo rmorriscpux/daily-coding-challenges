@@ -11,6 +11,7 @@ def sortedSquares(int_list: List[int]):
     left_ptr = 0
     right_ptr = len(int_list) - 1
 
+    # Go from highest to lowest absolute value, inserting the square value at the start of the output list.
     while left_ptr <= right_ptr:
         if abs(int_list[left_ptr]) > abs(int_list[right_ptr]):
             square_list.insert(0, int_list[left_ptr] ** 2)
