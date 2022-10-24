@@ -1,0 +1,64 @@
+/*
+Write an algorithm to justify text. Given a sequence of words and an integer line length k, return a list of strings which represents each line, fully justified.
+
+More specifically, you should have as many words as possible in each line.
+There should be at least one space between each word. Pad extra spaces when necessary so that each line has exactly length k.
+Spaces should be distributed as equally as possible, with the extra spaces, if any, distributed starting from the left.
+
+If you can only fit one word on a line, then you should pad the right-hand side with spaces.
+
+Each word is guaranteed not to be longer than k.
+
+For example, given the list of words ["the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"] and k = 16, you should return the following:
+
+["the  quick brown", # 1 extra space on the left
+"fox  jumps  over", # 2 extra spaces distributed evenly
+"the   lazy   dog"] # 4 extra spaces distributed evenly
+*/
+
+function justifyText(wordList, k) {
+    function buildLine(subList, extraSpaces) {
+        let newLine = "";
+
+        if (subList.length == 1) {
+            newLine = subList[0].concat(" ".repeat(extraSpaces));
+            return newLine;
+        }
+
+        let spacesForAll = Math.floor(extraSpaces/(subList.length-1)+1);
+        let additionalExtra = extraSpaces % (subList.length-1);
+
+        for (let i = 0; i < subList.length; i++) {
+            newLine = newLine.concat(subList[i]);
+            if (i < subList.length-1) {
+                newLine = newLine.concat(" ".repeat(spacesForAll));
+                if (i < additionalExtra) {
+                    newLine = newLine.concat(" ");
+                }
+            }
+        }
+
+        return newLine;
+    }
+
+    const justifiedLines = [];
+    const currentLine = [wordList[0]];
+    let numChars = wordList[0].length;
+
+    for (let i = 1; i < wordList.length; i++) {
+        if (numChars + 1 + wordList[i].length > k) {
+            justifiedLines.push(buildLine(currentLine, k-numChars));
+            currentLine.splice(0, currentLine.length); // Clears currentLine array.
+            numChars = -1;
+        }
+        currentLine.push(wordList[i]);
+        numChars += 1 + wordList[i].length;
+    }
+    if (currentLine.length > 0) {
+        justifiedLines.push(buildLine(currentLine, k-numChars));
+    }
+
+    return justifiedLines;
+}
+
+console.log(justifyText(["the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"], 16));
