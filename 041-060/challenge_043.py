@@ -8,52 +8,36 @@ Implement a stack that has the following methods:
 Each method should run in constant time.
 '''
 
-class StackNode:
-    def __init__(self, data):
-        self.data = data
-        self.next = None
-
+# Class maintains a second list that contains indices where a value greater than the last max value was pushed.
 class Stack:
-    def __init__(self, data=None):
-        self.top = StackNode(data) if data else None
-        self._max = data
+    def __init__(self, *values):
+        self.stack = []
+        self.max_stack = []
+        for v in values:
+            self.push(v)
 
-    def push(self, data):
-        new_top = StackNode(data)
-        new_top.next = self.top
-        self.top = new_top
-        if self._max == None or data > self._max:
-            self._max = data
-        return self
+    # When a value is pushed, check if it's greater than the value at the position where the current max is.
+    def push(self, value):
+        self.stack.append(value)
+        if len(self.max_stack) == 0 or value > self.stack[len(self.max_stack)-1]:
+            self.max_stack.append(len(self.stack)-1)
 
+    # When a value is popped, check if the index popped was the last value in max_stack. If so, remove that as well.
     def pop(self):
-        # Return None if stack is empty.
-        if not self.top:
+        if len(self.stack) == 0:
             return None
 
-        pop_data = self.top.data
-        self.top = self.top.next
-        # Recalculate self._max if the max value was popped.
-        if pop_data == self._max:
-            if self.top == None:
-                self._max = None
-            else:
-                self._max = self.top.data
-                stack_ptr = self.top.next
-                while stack_ptr != None:
-                    if stack_ptr.data > self._max:
-                        self._max = stack_ptr.data
-                    stack_ptr = stack_ptr.next
-        return pop_data
+        if len(self.stack) - 1 == self.max_stack[-1]:
+            self.max_stack.pop()
 
-    @property
+        return self.stack.pop()
+
     def max(self):
-        return self._max
+        return self.stack[len(self.max_stack)-1] if len(self.stack) > 0 else None
 
-my_stack = Stack()
-print("Max in stack:", my_stack.max)
-my_stack.push(3).push(1).push(5).push(2)
-print("Max in stack:", my_stack.max)
-print("Popped", my_stack.pop())
-print("Popped", my_stack.pop())
-print("Max in stack:", my_stack.max)
+s = Stack()
+s.push(1)
+s.push(3)
+s.push(2)
+s.push(5)
+s.max()
