@@ -18,7 +18,7 @@ def getMaxSum(arr: List):
     if not arr:
         return 0
 
-    max_sum = temp_max_sum = arr[0]
+    max_sum = temp_max_sum = max(arr[0], 0)
 
     # Traverses the list and maintains a max sum, discarding it if a larger contiguous sum comes along.
     for num in arr[1:]:
