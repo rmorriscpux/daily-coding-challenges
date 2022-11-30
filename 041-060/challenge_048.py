@@ -26,6 +26,14 @@ class TreeNode:
         self.left = None
         self.right = None
 
+    def __repr__(self):
+        out_str = str(self.data)
+        if self.left:
+            out_str += f", [left: {repr(self.left)}]"
+        if self.right:
+            out_str += f", [right: {repr(self.right)}]"
+        return out_str
+
 def buildTree(pre_order: List, in_order: List):
     if not pre_order or not in_order:
         return None
@@ -77,5 +85,6 @@ def printTreePreOrder(root: TreeNode):
     return
 
 t = buildTree(['a', 'b', 'd', 'e', 'c', 'f', 'g'], ['d', 'b', 'e', 'a', 'f', 'c', 'g'])
+print(t)
 printTreeInOrder(t)
 printTreePreOrder(t)
