@@ -56,31 +56,38 @@ def longestPath(trie_root: TrieNode):
     def rLongestPath(trie_node: TrieNode):
         # Leaf
         if len(trie_node.children) == 0:
+            # With no children, the between path and descenants' path are both 0.
+            # The singular path is its own path weight if it exists.
             sing_path = 0 if not trie_node.path_weight else trie_node.path_weight
             return sing_path, 0, 0
 
         # Singular child
         elif len(trie_node.children) == 1:
             last_sing_path, last_betw_path, last_desc_path = rLongestPath(trie_node.children[0])
+            # The longest singular path is the child's singular path weight sum plus its own path weight, if it exists.
+            # The longest path through the node is the child's singular path weight.
+            # The longest descendants' path is the maximum between the child's between path weight and descendants' path weight.
             desc_path = max(last_betw_path, last_desc_path)
             sing_path = last_sing_path if not trie_node.path_weight else last_sing_path + trie_node.path_weight
             return sing_path, last_sing_path, desc_path
 
         # Multiple children
-        max_betw_path, max_desc_path = 0, 0
+        max_desc_path = 0
         all_sing_paths = []
 
+        # Go through every child, calculating the maximum descendants' path among all children's between paths and descendants' paths.
+        # Also collect all children's singlular paths for calculating the node's maximum singular path and maximum between path.
         for child in trie_node.children:
             child_sing_path, child_betw_path, child_desc_path = rLongestPath(child)
             max_desc_path = max(child_betw_path, child_desc_path, max_desc_path)
             all_sing_paths.append(child_sing_path)
 
+        # The longest singular path is the child's singular path weight sum plus its own path weight, if it exists.
+        # The longest path through the node is the sum of the two longest singular paths of the node's children.
         all_sing_paths.sort(reverse=True)
-
-        max_betw_path = all_sing_paths[0] + all_sing_paths[1]
         cur_sing_path = all_sing_paths[0] if not trie_node.path_weight else all_sing_paths[0] + trie_node.path_weight
 
-        return cur_sing_path, max_betw_path, max_desc_path
+        return cur_sing_path, all_sing_paths[0] + all_sing_paths[1], max_desc_path
 
     return max(rLongestPath(trie_root))
 
