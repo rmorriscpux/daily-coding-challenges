@@ -16,6 +16,7 @@ and the weights: a-b: 3, a-c: 5, a-d: 8, d-e: 2, d-f: 4, e-g: 1, e-h: 1, the lon
 The path does not have to pass through the root, and each node can have any amount of children.
 '''
 
+# Class for a trie node. The path weight between parent and child should be stored in the child node. A root node has no path weight.
 class TrieNode:
     def __init__(self, data, path_weight=None):
         if path_weight:
