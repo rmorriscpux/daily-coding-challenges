@@ -92,6 +92,6 @@ if __name__ == "__main__":
         [0, 0, 0, 0, 8, 0, 0, 7, 9],
     ]
 
-sudokuSolver(board)
+    sudokuSolver(board)
 
-printSudoku(board)
+    printSudoku(board)
