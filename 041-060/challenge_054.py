@@ -11,10 +11,7 @@ from typing import List
 
 def sudokuSolver(board: List[List[int]]):
     # Quick function to get box coordinates for use in the box_fills dictionary.
-    def boxCoords(x, y):
-        box_row = x - (x % 3)
-        box_col = y - (y % 3)
-        return "{}-{}".format(box_row, box_col)
+    boxCoords = lambda x, y : f"{x-(x%3)}-{y-(y%3)}"
 
     # Backtracking recursive subroutine. As we go through, we want to keep track of which numbers are in each row, column, and box.
     def rSudokuSolver(board, row_fills, col_fills, box_fills):
