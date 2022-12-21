@@ -12,7 +12,7 @@ def pow(x: int, y: int):
         if y == 0:
             return 1
         elif y < 0:
-            raise ZeroDivisionError
+            raise ZeroDivisionError("0.0 cannot be raised to a negative power")
         return 0
     if y == 0:
         return 1 if x > 0 else -1
