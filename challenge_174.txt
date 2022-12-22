@@ -1,0 +1,13 @@
+Describe and give an example of each of the following types of polymorphism:
+
+    Ad-hoc polymorphism
+    - Multiple methods with the same name but with different types/amounts of parameters.
+    - ex: myFunction(integer), myFunction(integer, string), myFunction(integer, integer) as separate implementations.
+
+    Parametric polymorphism
+    - Allows for generic typing within complex objects, so a method can work on any type.
+    - ex: list methods that can act on any type, such as my_list.append(), my_list.pop(), etc.
+
+    Subtype polymorphism
+    - The ability for a method to act on a child class object in the same manner as its parent class.
+    - ex: class Square extends Rectangle, myFunction(Rectangle) can accept a Square object as its parameter.
