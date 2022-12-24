@@ -35,9 +35,9 @@ def largestMultOfThreeQuick(int_list: List[int]):
     if sorted_list[-1] < 0:
         return sorted_list[-1] * sorted_list[-2] * sorted_list[-3]
 
-    # Case: Max is 0.
+    # Case: Highest value is 0.
     elif sorted_list[-1] == 0:
-        return 0 if len(sorted_list) == 3 else sorted_list[-2] * sorted_list[-3] * sorted_list[-4]
+        return 0
 
     # Case: Positive integers exist.
     else:
