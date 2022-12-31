@@ -1,0 +1,6 @@
+Describe what happens when you type a URL into your browser and press Enter.
+
+    1. The browser gets the host IP matching the URL from either its resolution cache or the DNS.
+    2. If the host is found, an HTTP GET request is sent to the host server.
+    3. The host responds with the file(s) relevant to the URL or an error message.
+    4. The browser renders the HTML file in the window, if applicable.
