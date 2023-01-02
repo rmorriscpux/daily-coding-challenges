@@ -17,6 +17,7 @@ return 6.
 '''
 
 from typing import Tuple
+from functools import cached_property # Supported in Python 3.8 and later only. Use @property decorator otherwise.
 
 class Rectangle:
     def __init__(self, top_left: Tuple[int, int], dimensions: Tuple[int, int]):
@@ -25,11 +26,11 @@ class Rectangle:
         self.width = dimensions[0]
         self.height = dimensions[1]
         
-    @property
+    @cached_property
     def bottom_right(self):
         return (self.top_left[0] + self.width, self.top_left[1] - self.height)
 
-    @property
+    @cached_property
     def area(self):
         return self.width * self.height
 
