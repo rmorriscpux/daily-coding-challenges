@@ -30,21 +30,20 @@ def stabIntervals(X: List[Tuple[int, int]]):
             raise ValueError(f"Stab value not found in interval set {remaining_X}.")
         else:
             # Intervals may exist between the highest start and lowest end.
-            new_X = deepcopy(remaining_X)
             i = 0
-            while i < len(new_X):
+            while i < len(remaining_X):
                 # Remove all intervals stabbed by highest_start or lowest_end.
-                if (highest_start >= new_X[i][0] and highest_start <= new_X[i][1]) or (lowest_end >= new_X[i][0] and lowest_end <= new_X[i][1]):
-                    new_X.pop(i)
+                if (highest_start >= remaining_X[i][0] and highest_start <= remaining_X[i][1]) or (lowest_end >= remaining_X[i][0] and lowest_end <= remaining_X[i][1]):
+                    remaining_X.pop(i)
                 else:
                     i += 1
 
             # Recur adding highest_start and lowest_end to P.
-            return rStabIntervals(new_X, P.union({highest_start, lowest_end}))
+            return rStabIntervals(remaining_X, P.union({highest_start, lowest_end}))
 
     assert all(map(lambda interval: interval[0] <= interval[1], X))
 
-    return rStabIntervals(X, set())
+    return rStabIntervals(deepcopy(X), set())
 
 print(stabIntervals([(1, 4), (4, 5), (7, 9), (9, 12)]))
 print(stabIntervals([(0, 10), (1, 6), (4, 12)]))
