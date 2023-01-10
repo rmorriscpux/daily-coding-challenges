@@ -9,25 +9,17 @@ from typing import List, Tuple
 from copy import deepcopy
 
 def stabIntervals(X: List[Tuple[int, int]]):
-    def rStabIntervals(remaining_X: List[Tuple[int, int]], P: set):
-        # End case: Empty remaining_X list. Return current set.
+    def rStabIntervals(remaining_X: List[Tuple[int, int]]):
+        # End case: Empty remaining_X list. Return empty set.
         if not remaining_X:
-            return P
+            return set()
 
         highest_start = max(map(lambda interval: interval[0], remaining_X))
         lowest_end = min(map(lambda interval: interval[1], remaining_X))
 
         if lowest_end >= highest_start:
-            # All intervals are within the bound (highest_start, lowest_end) inclusive. Add only one number to a set.
-            for i in range(highest_start, lowest_end+1):
-                for interval in remaining_X:
-                    if i < interval[0] or i > interval[1]:
-                        # i is not in an interval in remaining_X.
-                        break
-                else: # Found a value i within all intervals. Add that to the input set and return.
-                    return P.union({i})
-            # Error case. Shouldn't get here.
-            raise ValueError(f"Stab value not found in interval set {remaining_X}.")
+            # All remaining intervals are within the bound (highest_start, lowest_end) inclusive. Add only one number to a set.
+            return {highest_start}
         else:
             # Intervals may exist between the highest start and lowest end.
             i = 0
@@ -38,12 +30,12 @@ def stabIntervals(X: List[Tuple[int, int]]):
                 else:
                     i += 1
 
-            # Recur adding highest_start and lowest_end to P.
-            return rStabIntervals(remaining_X, P.union({highest_start, lowest_end}))
+            # Return highest start, lowest end, and the result of recursion with remaining intervals.
+            return {highest_start, lowest_end}.union(rStabIntervals(remaining_X))
 
-    assert all(map(lambda interval: interval[0] <= interval[1], X))
+    assert all(map(lambda interval: interval[0] <= interval[1], X)) # Optional input check.
 
-    return rStabIntervals(deepcopy(X), set())
+    return rStabIntervals(deepcopy(X))
 
 print(stabIntervals([(1, 4), (4, 5), (7, 9), (9, 12)]))
 print(stabIntervals([(0, 10), (1, 6), (4, 12)]))
