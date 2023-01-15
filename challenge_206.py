@@ -13,10 +13,31 @@ def validPermutation(P: List[int]):
 
 def applyPermutation(arr: list, P: List[int]):
     # assert validPermutation(P)
+    assert len(arr) == len(P)
     return [arr[P[i]] for i in range(0, len(P))]
 
 def applyPermutationInPlace(arr: list, P: List[int]):
-    pass
+    # assert validPermutation(P)
+    assert len(arr) == len(P)
+
+    stored = {}
+    for i in range(0, len(P)):
+        cur_val = arr[i]
+        if i in stored:
+            cur_val = stored[i]
+            del stored[i]
+
+        if P[i] > i:
+            stored[P[i]] = arr[P[i]]
+
+        arr[P[i]] = cur_val
+
+    return
 
 print(applyPermutation(['a', 'b', 'c'], [2, 1, 0]))
 print(applyPermutation(['a', 'b', 'c', 'd'], [2, 1, 0, 3]))
+print("---")
+arr = ['a', 'b', 'c', 'd']
+print(arr)
+applyPermutationInPlace(arr, [2, 1, 0, 3])
+print(arr)
