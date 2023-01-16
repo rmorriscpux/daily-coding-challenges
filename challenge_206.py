@@ -21,16 +21,16 @@ def applyPermutationInPlace(arr: list, P: List[int]):
     assert len(arr) == len(P)
 
     stored = {}
-    for i in range(0, len(P)):
-        cur_val = arr[i]
-        if i in stored:
-            cur_val = stored[i]
-            del stored[i]
+    for cur_index, new_index in enumerate(P):
+        cur_val = arr[cur_index]
+        if cur_index in stored:
+            cur_val = stored[cur_index]
+            del stored[cur_index]
 
-        if P[i] > i:
-            stored[P[i]] = arr[P[i]]
+        if new_index > cur_index:
+            stored[new_index] = arr[new_index]
 
-        arr[P[i]] = cur_val
+        arr[new_index] = cur_val
 
     return
 
