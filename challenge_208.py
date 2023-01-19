@@ -18,8 +18,8 @@ class SLLNode:
 class SLL:
     def __init__(self, *values):
         self.head = None
-        for i in range(len(values)-1, -1, -1):
-            self.addToFront(values[i])
+        for v in values[::-1]:
+            self.addToFront(v)
         
     def __repr__(self):
         sll_head = self.head.value if self.head else None
