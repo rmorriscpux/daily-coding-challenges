@@ -46,3 +46,4 @@ def longestCommonSubseqLen(word1: str, word2: str, word3: str):
     return max(map(lambda s: len(s), substrings))
 
 print(longestCommonSubseqLen("epidemiologist", "refrigeration", "supercalifragilisticexpialodocious"))
+print(longestCommonSubseqLen("abc", "def", "ghi"))
