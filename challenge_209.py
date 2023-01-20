@@ -5,6 +5,43 @@ it should return 5, since the longest common subsequence is "eieio".
 '''
 
 def longestCommonSubseqLen(word1: str, word2: str, word3: str):
+    def rlongestCommonSubseqLen(target: str, comp1: str, comp2: str, seq_len: int):
+        if not (target and comp1 and comp2): # At least one string is empty.
+            return seq_len
+
+        target_letter = target[0]
+
+        # Find the next occurrence of the target letter in comp1 and comp2. If it isn't found, set the index to the length of the comp string.
+        for index1, letter1 in enumerate(comp1):
+            if letter1 == target_letter:
+                break
+        else:
+            index1 += 1
+
+        for index2, letter2 in enumerate(comp2):
+            if letter2 == target_letter:
+                break
+        else:
+            index2 += 1
+
+        out_seq_len = 0
+        if index1 == len(comp1) or index2 == len(comp2):
+            # Reached the end of comp1 or comp2, so add the current built_str to the set.
+            out_seq_len = seq_len
+        else:
+            # When target_letter is found, update the set with the recursion using substrings past
+            # the first instance of target_letter in each string, and add target_letter to built_str.
+            out_seq_len = rlongestCommonSubseqLen(target[1:], comp1[index1+1:], comp2[index2+1:], seq_len + 1)
+
+        # Update the set with recursion using the target string past the first character.
+        return max(out_seq_len, rlongestCommonSubseqLen(target[1:], comp1, comp2, seq_len))
+
+    return max(rlongestCommonSubseqLen(word1, word2, word3, 0), rlongestCommonSubseqLen(word2, word3, word1, 0), rlongestCommonSubseqLen(word3, word1, word2, 0))
+
+print(longestCommonSubseqLen("epidemiologist", "refrigeration", "supercalifragilisticexpialodocious"))
+print(longestCommonSubseqLen("abc", "def", "ghi"))
+
+def longestCommonSubseqLenOrig(word1: str, word2: str, word3: str):
     def rlongestCommonSubseqLen(target: str, comp1: str, comp2: str, built_str: str):
         if not (target and comp1 and comp2): # At least one string is empty.
             return {built_str}
@@ -44,6 +81,3 @@ def longestCommonSubseqLen(word1: str, word2: str, word3: str):
 
     # Calculate the length of each substring returned in the set and return the max value from that.
     return max(map(lambda s: len(s), substrings))
-
-print(longestCommonSubseqLen("epidemiologist", "refrigeration", "supercalifragilisticexpialodocious"))
-print(longestCommonSubseqLen("abc", "def", "ghi"))
