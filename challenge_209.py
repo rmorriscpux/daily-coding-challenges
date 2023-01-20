@@ -26,11 +26,10 @@ def longestCommonSubseqLen(word1: str, word2: str, word3: str):
 
         out_seq_len = 0
         if index1 == len(comp1) or index2 == len(comp2):
-            # Reached the end of comp1 or comp2, so add the current built_str to the set.
+            # Reached the end of comp1 or comp2, so we have a max length ending with this character.
             out_seq_len = seq_len
         else:
-            # When target_letter is found, update the set with the recursion using substrings past
-            # the first instance of target_letter in each string, and add target_letter to built_str.
+            # When target_letter is found, recur using substrings past the first instance of target_letter in each string, adding 1 to seq_len.
             out_seq_len = rlongestCommonSubseqLen(target[1:], comp1[index1+1:], comp2[index2+1:], seq_len + 1)
 
         # Update the set with recursion using the target string past the first character.
