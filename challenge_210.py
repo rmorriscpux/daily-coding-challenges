@@ -12,9 +12,11 @@ def collatzSeq(n: int, steps: int=0):
     assert n > 0
     global collatzCache
 
+    # End case.
     if n == 1:
         return steps
 
+    # Check if the number of steps in the sequence has already been calculated.
     if collatzCache and n in collatzCache:
         return steps + collatzCache[n]
 
@@ -27,9 +29,11 @@ def collatzTest():
     global collatzCache
     collatzCache.clear()
 
+    # Run Collatz Sequence starting with all integers from 1 to 1000000 inclusive.
     for i in range(1, 1000001):
         collatzCache[i] = collatzSeq(i)
 
+    # Print the integer with the highest number of steps in its Collatz sequence to reach 1.
     print(max(collatzCache, key=lambda k: collatzCache[k]))
     return
 
