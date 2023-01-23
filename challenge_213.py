@@ -13,17 +13,21 @@ def generateIPs(digits):
     def rGenerateIPs(remaining_digits: str, built_ips: List[str], sub_addrs: List[str]):
         digit_len = len(remaining_digits)
         
+        # End case - Four 1 to 3 digit subaddresses. At this point, IP is valid if remaining_digits is empty.
         if len(sub_addrs) == 4:
             if digit_len == 0:
                 built_ips.append('.'.join(sub_addrs))
             return
 
+        # Valid numbers: 0 through 9
         if digit_len >= 1:
             rGenerateIPs(remaining_digits[1:], built_ips, sub_addrs + [remaining_digits[:1]])
 
+        # Valid numbers: 10 through 99
         if digit_len >= 2 and remaining_digits[0] != '0':
             rGenerateIPs(remaining_digits[2:], built_ips, sub_addrs + [remaining_digits[:2]])
 
+        # Valid numbers: 100 through 255
         if digit_len >= 3 and remaining_digits[0] != '0' and int(remaining_digits[:3]) <= 255:
             rGenerateIPs(remaining_digits[3:], built_ips, sub_addrs + [remaining_digits[:3]])
 
@@ -38,3 +42,4 @@ def generateIPs(digits):
     return built_ips
 
 print(generateIPs('2542540123'))
+print(generateIPs('2542580123'))
