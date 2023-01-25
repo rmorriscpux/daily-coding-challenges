@@ -17,4 +17,6 @@ def longestConsecutiveOnes(n: int):
             count = 0
         n >>= 1
 
-    return max_count
+    return max(count, max_count)
+
+print(longestConsecutiveOnes(156))
