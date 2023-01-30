@@ -37,23 +37,23 @@ class Connect4:
         # Clear terminal window. 'cls' is used for Windows (os.name == 'nt') and 'clear' is used for Mac/Linux/ChromeOS (os.name == 'posix')
         os.system('cls') if os.name == 'nt' else os.system('clear')
         # Title
-        print("|" + "CONNECT 4".center(self._COLS * 4 - 1) + "|")
+        print("│" + "CONNECT 4".center(self._COLS * 4 - 1) + "│")
         # Column headers
-        col_label_str = "|"
+        col_label_str = "│"
         for j in range(1, self._COLS+1):
-            col_label_str += str(j).center(3) + "|"
+            col_label_str += str(j).center(3) + "│"
         print(col_label_str)
-        print("|===" * self._COLS + "|")
+        print("╞" + "═══╪" * (self._COLS-1) + "═══╡")
         # Grid
         for i in range(0, self._ROWS):
-            row_str = "|"
+            row_str = "│"
             for j in range(0, self._COLS):
-                row_str += " " + self._SYMBOLS[self.board[j][i]] + " |"
+                row_str += " " + self._SYMBOLS[self.board[j][i]] + " │"
             print(row_str)
             if i < self._ROWS - 1:
-                print("|---" * self._COLS + "|")
+                print("├" + "───┼" * (self._COLS-1) + "───┤")
         # Board Bottom
-        print("|===" * self._COLS + "|")
+        print("╘" + "═══╧" * (self._COLS-1) + "═══╛")
         return
 
     # Play one turn.
