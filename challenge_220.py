@@ -11,12 +11,17 @@ from typing import List
 
 def getMaxCoinsValue(coins: List[int]):
     def rGetMaxCoinsValue(coins: List[int], p1_total: int, p1_turn: bool):
+        # All coins removed, game end.
         if len(coins) == 0:
             return p1_total
 
         if p1_turn:
+            # Compare the max results for each scenario for player 1.
             return max(rGetMaxCoinsValue(coins[1:], p1_total+coins[0], False), rGetMaxCoinsValue(coins[:-1], p1_total+coins[-1], False))
         else:
+            # Player 2 always selects the higher coin between the two on the ends. Get max for player 1 when equal.
+            if coins[0] == coins[1]:
+                return max(rGetMaxCoinsValue(coins[1:], p1_total, True), rGetMaxCoinsValue(coins[:-1], p1_total, True))
             return rGetMaxCoinsValue(coins[1:], p1_total, True) if coins[0] > coins[-1] else rGetMaxCoinsValue(coins[:-1], p1_total, True)
 
     return rGetMaxCoinsValue(coins, 0, True)
