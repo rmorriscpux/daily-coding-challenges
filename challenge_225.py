@@ -23,3 +23,20 @@ def lastPrisoner(N: int, k: int):
     return prisoners[0]
 
 print(lastPrisoner(5, 2))
+
+def quickLastPrisoner(N: int):
+    # k = 2
+    assert N > 0
+
+    prisoners = [(i+1) for i in range(0, N)]
+
+    start = 0
+    # Each iteration cuts the length of the prisoner list in half, so time complexity is O(log N)
+    while len(prisoners) > 1:
+        next_start = len(prisoners) % 2
+        prisoners = prisoners[start::2]
+        start = next_start
+
+    return prisoners[0]
+
+print(quickLastPrisoner(5))
