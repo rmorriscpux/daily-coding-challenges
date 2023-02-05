@@ -13,7 +13,7 @@ def lastPrisoner(N: int, k: int):
     assert N > 0
     assert 0 <= k < N
 
-    prisoners = [(i+1) for i in range(0, N)]
+    prisoners = [i for i in range(1, N+1)]
     index = k-1
 
     while len(prisoners) > 1:
@@ -28,7 +28,7 @@ def quickLastPrisoner(N: int):
     # k = 2
     assert N > 0
 
-    prisoners = [(i+1) for i in range(0, N)]
+    prisoners = list(range(1, N+1))
 
     start = 0
     # Each iteration cuts the length of the prisoner list in half, so time complexity is O(log N)
