@@ -10,8 +10,8 @@ ROWS = 4
 COLS = 4
 
 class TrieNode:
-    def __init__(self, letter=None, data=None):
-        self.word = data
+    def __init__(self, letter=None):
+        self.word = None
         self.letter = letter
         self.children = {}
 
@@ -26,8 +26,8 @@ class WordTrie:
         node_ptr = self.root
         for char in word:
             if char not in node_ptr.children:
-                node_ptr[char] = TrieNode(letter=char)
-            node_ptr = node_ptr[char]
+                node_ptr.children[char] = TrieNode(letter=char)
+            node_ptr = node_ptr.children[char]
         
         node_ptr.word = word
         
@@ -54,66 +54,19 @@ def boggleSolver(board: List[List[str]], word_file_name: str):
 
             if canTraverse(board, available, row+i, col+j, cur_letter):
                 available[row+i][col+j] = False
-                rBoggleSolver(board, available, row+i, col+j, cur_letter.children[board[row+i][col+j]])
+                rBoggleSolver(board, available, row+i, col+j, cur_letter.children[board[row+i][col+j]], words_on_board)
                 available[row+i][col+j] = True
 
             j += 1
             if j == 2:
                 i += 1
                 j = -1
-        #NW
-        # if canTraverse(board, available, row-1, col-1, cur_letter):
-        #     available[row-1][col-1] = False
-        #     rBoggleSolver(board, available, row-1, col-1, cur_letter.children[board[row-1][col-1]])
-        #     available[row-1][col-1] = True
-
-        # #N
-        # if canTraverse(board, available, row-1, col, cur_letter):
-        #     available[row-1][col] = False
-        #     rBoggleSolver(board, available, row-1, col, cur_letter.children[board[row-1][col]])
-        #     available[row-1][col] = True
-
-        # #NE
-        # if canTraverse(board, available, row-1, col+1, cur_letter):
-        #     available[row-1][col+1] = False
-        #     rBoggleSolver(board, available, row-1, col+1, cur_letter.children[board[row-1][col+1]])
-        #     available[row-1][col+1] = True
-
-        # #W
-        # if canTraverse(board, available, row, col-1, cur_letter):
-        #     available[row][col-1] = False
-        #     rBoggleSolver(board, available, row, col-1, cur_letter.children[board[row][col-1]])
-        #     available[row][col-1] = True
-
-        # #E
-        # if canTraverse(board, available, row, col+1, cur_letter):
-        #     available[row][col+1] = False
-        #     rBoggleSolver(board, available, row, col+1, cur_letter.children[board[row][col+1]])
-        #     available[row][col+1] = True
-
-        # #SW
-        # if canTraverse(board, available, row+1, col-1, cur_letter):
-        #     available[row+1][col-1] = False
-        #     rBoggleSolver(board, available, row+1, col-1, cur_letter.children[board[row+1][col-1]])
-        #     available[row+1][col-1] = True
-
-        # #S
-        # if canTraverse(board, available, row+1, col, cur_letter):
-        #     available[row+1][col] = False
-        #     rBoggleSolver(board, available, row-1, col-1, cur_letter.children[board[row+1][col]])
-        #     available[row+1][col] = True
-
-        # #SE
-        # if canTraverse(board, available, row+1, col+1, cur_letter):
-        #     available[row+1][col+1] = False
-        #     rBoggleSolver(board, available, row+1, col+1, cur_letter.children[board[row+1][col+1]])
-        #     available[row+1][col+1] = True
 
     # Build word database.
     word_db = WordTrie()
     with open(word_file_name, 'r') as word_file:
         for word in word_file:
-            word_db.addWord(word.upper())
+            word_db.addWord(word.strip().upper())
 
     words_on_board = set()
     available = [[True for j in board[i]] for i in range(0, len(board))]
@@ -125,7 +78,7 @@ def boggleSolver(board: List[List[str]], word_file_name: str):
                 rBoggleSolver(board, available, row, col, word_db.root.children[ltr], words_on_board)
                 available[row][col] = True
 
-    return words_on_board
+    return sorted(words_on_board)
 
 if __name__ == "__main__":
     from random import randrange, shuffle
@@ -168,3 +121,5 @@ if __name__ == "__main__":
             print("├──" + "─┼──" * (COLS-1) + "─┤")
     print("└──" + "─┴──" * (COLS-1) + "─┘")
 ### End Print Board ###
+
+    print(boggleSolver(board, "challenge_227_words.txt"))
