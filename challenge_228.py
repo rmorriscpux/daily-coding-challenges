@@ -32,6 +32,6 @@ def largestPossibleInteger(int_list: List[int]):
         for val_arr in sorted_vals:
             combined_nums.extend(sorted(val_arr, reverse=True))
     
-    return "".join(combined_nums)
+    return int("".join(combined_nums))
 
 print(largestPossibleInteger([10, 7, 76, 415]))
