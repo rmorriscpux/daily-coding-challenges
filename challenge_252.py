@@ -60,6 +60,8 @@ class Fraction:
     
     def toEgyptianFraction(self) -> str:
         def rToEgyptianFraction(frac: Fraction, denominators: List[int]):
+            if frac.numerator == 0:
+                return denominators
             if frac.numerator == 1:
                 denominators.append(frac.denominator)
                 return denominators
@@ -70,7 +72,7 @@ class Fraction:
             new_frac = frac - egypt_frac
             return rToEgyptianFraction(new_frac, denominators)
         
-        if self.numerator == 1:
+        if self.numerator in [0, 1]:
             return str(self)
         
         denominators = rToEgyptianFraction(self, [])
