@@ -24,6 +24,7 @@ class Fraction:
     def __repr__(self) -> str:
         return str(self)
     
+    # Fraction Addition
     def __add__(self, other):
         if not isinstance(other, Fraction):
             raise TypeError("Cannot add Fraction with non-Fraction.")
@@ -41,6 +42,7 @@ class Fraction:
         else:
             return Fraction((self.numerator * upper_factor) + (other.numerator * lower_factor), sum_denom)
     
+    # Fraction Subtraction
     def __sub__(self, other):
         if not isinstance(other, Fraction):
             raise TypeError("Cannot subtract Fraction with non-Fraction.")
@@ -61,37 +63,45 @@ class Fraction:
     def toDecimal(self) -> float:
         return self.numerator / self.denominator
     
+    # Problem Method.
     def toEgyptianFraction(self) -> str:
         def rToEgyptianFraction(frac: Fraction, denominators: List[int]):
+            # End Case
             if frac.numerator == 0:
                 return denominators
-            if frac.numerator == 1:
-                denominators.append(frac.denominator)
-                return denominators
             
+            # Fraction normalized to numerator of 1 and denominator rounded up to the nearest whole number. Add this denominator to list.
             egypt_frac = Fraction(1, ceil(frac.denominator / frac.numerator))
             denominators.append(egypt_frac.denominator)
-
-            new_frac = frac - egypt_frac
-            return rToEgyptianFraction(new_frac, denominators)
+            # Get the remainder fraction and recur with it.
+            remainder = frac - egypt_frac
+            return rToEgyptianFraction(remainder, denominators)
         
-        if self.numerator in [-1, 0, 1]:
-            return str(self)
-        
+        # Get denominator list.
         denominators = rToEgyptianFraction(Fraction(abs(self.numerator), self.denominator), [])
+        # Case: self.numerator = 0
+        if not denominators:
+            return str(self)
 
+        # Convert to formatted string.
         egypt_frac_str = "-" if self.numerator < 0 else ""
-        for d in denominators[:-1]:
-            egypt_frac_str += f"1 / ({d} + "
-        egypt_frac_str += f"(1 / {denominators[-1]}" + ")" * len(denominators)
+        if len(denominators) == 1:
+            egypt_frac_str += f"1 / {denominators[0]}" 
+        else:
+            for d in denominators[:-1]:
+                egypt_frac_str += f"1 / ({d} + "
+            egypt_frac_str += f"(1 / {denominators[-1]}" + ")" * len(denominators)
 
         return egypt_frac_str
     
-f = Fraction(4, 13)
-print(f.toEgyptianFraction())
+f1 = Fraction(4, 13)
+print(f1.toEgyptianFraction())
 
 f2 = Fraction(1, 13)
 print(f2.toEgyptianFraction())
 
 f3 = Fraction(-4, 13)
 print(f3.toEgyptianFraction())
+
+f4 = Fraction(2, 16)
+print(f4.toEgyptianFraction())
