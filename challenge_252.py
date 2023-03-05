@@ -12,6 +12,9 @@ class Fraction:
     def __init__(self, numerator: int, denominator: int):
         if denominator == 0:
             raise ZeroDivisionError("Denominator cannot be zero.")
+        elif denominator < 0:
+            numerator = -numerator
+            denominator = -denominator
         self.numerator = numerator
         self.denominator = denominator
 
@@ -72,12 +75,12 @@ class Fraction:
             new_frac = frac - egypt_frac
             return rToEgyptianFraction(new_frac, denominators)
         
-        if self.numerator in [0, 1]:
+        if self.numerator in [-1, 0, 1]:
             return str(self)
         
-        denominators = rToEgyptianFraction(self, [])
-        egypt_frac_str = ""
+        denominators = rToEgyptianFraction(Fraction(abs(self.numerator), self.denominator), [])
 
+        egypt_frac_str = "-" if self.numerator < 0 else ""
         for d in denominators[:-1]:
             egypt_frac_str += f"1 / ({d} + "
         egypt_frac_str += f"(1 / {denominators[-1]}" + ")" * len(denominators)
@@ -85,8 +88,10 @@ class Fraction:
         return egypt_frac_str
     
 f = Fraction(4, 13)
-
 print(f.toEgyptianFraction())
 
 f2 = Fraction(1, 13)
 print(f2.toEgyptianFraction())
+
+f3 = Fraction(-4, 13)
+print(f3.toEgyptianFraction())
