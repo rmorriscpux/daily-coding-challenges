@@ -17,7 +17,7 @@ def zigzag(word: str, k: int):
         print(word)
         return
     # Setup. Make a list of lines, start at line 0, and direct to go down.
-    lines = [""] * k
+    lines = [""] * min(k, len(word))
     l_index = 0
     next = 1
 
