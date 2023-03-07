@@ -12,8 +12,8 @@ t     a     g
 
 def zigzag(word: str, k: int):
     assert k > 0
-    # If one line, print the word and return.
-    if k == 1:
+    # If one line or word is an empty string, print the word and return.
+    if k == 1 or not word:
         print(word)
         return
     # Setup. Make a list of lines, start at line 0, and direct to go down.
