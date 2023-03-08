@@ -60,4 +60,7 @@ graph = [
     [3]
 ]
 
-print(transitiveClosure(graph))
+tc_graph = transitiveClosure(graph)
+
+for row in tc_graph:
+    print(row)
