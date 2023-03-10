@@ -19,7 +19,7 @@ def smallestSortWindow(int_arr: List[int]) -> Tuple[int, int]:
         if sorted(int_arr[:end+1]) + int_arr[end+1:] == sorted_arr:
             break
         end += 1
-
+    # Determine the start point.
     start = 0
     while start < arr_len - 1:
         # Increment start up until a point where starting past it would not result in a sorted array.
