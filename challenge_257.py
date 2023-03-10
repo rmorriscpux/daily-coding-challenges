@@ -12,13 +12,6 @@ def smallestSortWindow(int_arr: List[int]) -> Tuple[int, int]:
         return (0, 0)
     
     arr_len = len(int_arr)
-    # Determine the end point.
-    end = 1
-    while end < arr_len:
-        # Increment end up until everything past end is sorted, while everything up to end is below the value at end+1.
-        if sorted(int_arr[:end+1]) + int_arr[end+1:] == sorted_arr:
-            break
-        end += 1
     # Determine the start point.
     start = 0
     while start < arr_len - 1:
@@ -26,6 +19,13 @@ def smallestSortWindow(int_arr: List[int]) -> Tuple[int, int]:
         if int_arr[:start+1] + sorted(int_arr[start+1:]) != sorted_arr:
             break
         start += 1
+    # Determine the end point.
+    end = start+1
+    while end < arr_len:
+        # Increment end up until everything past end is sorted, while everything up to end is below the value at end+1.
+        if sorted(int_arr[:end+1]) + int_arr[end+1:] == sorted_arr:
+            break
+        end += 1
 
     return (start, end)
 
