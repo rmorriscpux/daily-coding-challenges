@@ -20,8 +20,6 @@ Given a dictionary of character frequencies, build a Huffman tree, and use it to
 
 from typing import Dict
 
-from queue import Queue
-
 class TreeNode:
     def __init__(self, character: str="*", freq: int=0):
         self.character = character
