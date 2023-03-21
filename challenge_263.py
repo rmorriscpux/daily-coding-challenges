@@ -13,7 +13,7 @@ The sentence must end with a terminal mark immediately following a word.
 import re
 
 def sentenceChecker(char_stream: str):
-    # Construct regex patterns.66
+    # Construct regex patterns.
     FIRST_WORD = re.compile('[A-Z][a-z]*')
     ADDL_WORD = re.compile('[a-z]+')
     SPACE = re.compile('\s')
