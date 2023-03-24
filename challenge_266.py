@@ -36,7 +36,6 @@ class WordDiagram:
         # Case where the other word has one additional letter type.
         # The new letter must only appear once in the other word, and all other letters must appear equally between words.
         elif len(set(o_keys).difference(set(s_keys))) == 1 and len(set(o_keys).intersection(set(s_keys))) == len(s_keys):
-            diff = 0
             for k in o_keys:
                 if k not in s_keys:
                     if other.diagram[k] != 1:
@@ -54,8 +53,7 @@ def getStepWords(word: str, dictionary: List[str]):
     step_words = set()
     wd = WordDiagram(word)
     for target in dictionary:
-        target_wd = WordDiagram(target)
-        if wd.isStepWord(target_wd):
-            step_words.add(target_wd)
+        if wd.isStepWord(WordDiagram(target)):
+            step_words.add(target)
 
     return step_words
