@@ -16,3 +16,29 @@ pipes = {
     'C': {}
 }
 '''
+
+def lowestConnectionCost(pipes: dict[str, dict[str, int]]) -> int:
+    def rLowestConnectionCost(pipes: dict[str, dict[str, int]], remaining_houses: set[str], total_cost: int=0) -> int:
+        if not remaining_houses:
+            # Return total_cost when no houses are left to connect.
+            return total_cost
+        
+        costs = []
+        for start in set(pipes.keys()).difference(remaining_houses):
+            connectable_houses = pipes[start].keys() & remaining_houses
+            for next in connectable_houses:
+                costs.append(rLowestConnectionCost(pipes, remaining_houses.difference({next}), total_cost + pipes[start][next]))
+        # Return the lowest cost from this iteration.
+        return min(costs)
+    
+    return rLowestConnectionCost(pipes, set(pipes.keys()).difference({'plant'}))
+
+if __name__ == "__main__":
+    pipes = {
+        'plant': {'A': 1, 'B': 5, 'C': 20},
+        'A': {'C': 15},
+        'B': {'C': 10},
+        'C': {}
+    }
+
+    print(lowestConnectionCost(pipes))
