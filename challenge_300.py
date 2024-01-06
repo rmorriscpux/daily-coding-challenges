@@ -28,10 +28,13 @@ class VotingCounter:
         votes = []
         if start_line < 0:
             start_line = 0
+        # Read in the votes from the file stream.
         with open(self._vote_file) as vf:
             votes = vf.readlines()[start_line:] if num_lines < 0 else vf.readlines()[start_line:start_line+num_lines]
+        # Count votes for each candidate.
         for v in votes:
             voter_id, candidate_id = v.removeprefix('(').removesuffix(')\n').split(', ')
+            # Voter already found in self._voters
             if voter_id in self._voters:
                 raise VoterFraudException(f"Voter '{voter_id}' counted twice!")
             if candidate_id not in self.vote_count:
@@ -39,7 +42,8 @@ class VotingCounter:
             self.vote_count[candidate_id] += 1
             self._voters.add(voter_id)
         return len(votes)
-    
+
+# Generate a randomized voter pool and write into a text file.
 def voteGenerator(out_file: str, vote_count: int=100000, candidate_count: int=10):
     voter_order = list(range(vote_count))
     shuffle(voter_order)
